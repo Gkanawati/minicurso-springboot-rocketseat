@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gkanawati.todolist.utils.Utils;
+
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/tasks")
@@ -46,8 +50,31 @@ public class TaskController {
   @GetMapping("")
   public ResponseEntity<Object> getAll(HttpServletRequest request) {
     var userId = (UUID) request.getAttribute("userId");
+
     var tasks = this.taskRepository.findByUserId(userId);
     return ResponseEntity.status(HttpStatus.OK).body(tasks);
   }
 
+  @PutMapping("/{taskId}")
+  public ResponseEntity<Object> update(@RequestBody TaskModel taskModel, HttpServletRequest request,
+      @PathVariable UUID taskId) {
+    var userId = (UUID) request.getAttribute("userId");
+
+    var queryTask = this.taskRepository.findById(taskId);
+
+    if (queryTask.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{ \"message\": \"Task not found\" }");
+    }
+
+    var task = queryTask.get();
+
+    if (task == null || !task.getUserId().equals(userId)) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{ \"message\": \"Task not found\" }");
+    }
+
+    Utils.copyNonNullProperties(taskModel, task);
+
+    this.taskRepository.save(task);
+    return ResponseEntity.status(HttpStatus.OK).body(task);
+  }
 }
