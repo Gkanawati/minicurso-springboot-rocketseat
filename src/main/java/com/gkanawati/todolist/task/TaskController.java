@@ -1,5 +1,6 @@
 package com.gkanawati.todolist.task;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,25 @@ public class TaskController {
   private ITaskRepository taskRepository;
 
   @PostMapping("")
-  public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+  public ResponseEntity<Object> create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
     var userId = (UUID) request.getAttribute("userId");
     taskModel.setUserId(userId);
-    var cratedTask = this.taskRepository.save(taskModel);
-    return ResponseEntity.status(HttpStatus.CREATED).body(cratedTask);
+
+    var currentDate = LocalDateTime.now();
+    if (currentDate.isAfter(taskModel.getEndAt())) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body("{ \"message\": \"A data de término não pode ser anterior a data atual\" }");
+    }
+
+    if (taskModel.getStartAt().isAfter(taskModel.getEndAt())) {
+      return ResponseEntity
+          .status(HttpStatus.BAD_REQUEST)
+          .body("{ \"message\": \"A data de início não pode ser posterior a data de término\" }");
+    }
+
+    var createdTask = this.taskRepository.save(taskModel);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
   }
 
 }
