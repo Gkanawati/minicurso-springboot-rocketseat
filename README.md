@@ -40,10 +40,10 @@ Desenvolvimento de uma aplicação back-end em Java 17 com Spring Boot, focada e
 
 ```
 {
-	"name": "Gabriel",
-	"username": "gk",
-	"email": "gabriel@teste.com",
-	"password": "1234"
+  "name": "Gabriel",
+  "username": "gk",
+  "email": "gabriel@teste.com",
+  "password": "1234"
 }
 ```
 
