@@ -1,6 +1,6 @@
-<p align="center" style='margin-top: 20px;'>
+<h2 align="center" style='margin-top: 20px;'>
   <strong>📋 TodoList API - Java Spring Boot</strong>
-</p>
+</h2>
 
 ## 🚀 Projeto
 
