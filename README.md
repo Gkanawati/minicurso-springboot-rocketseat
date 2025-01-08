@@ -85,8 +85,8 @@ Desenvolvimento de uma aplicação back-end em Java 17 com Spring Boot, focada e
 
 ```
 # Clone o repositório
-git clone https://github.com/seu-usuario/todolist-api.git
-cd todolist-api
+git clone https://github.com/Gkanawati/minicurso-springboot-rocketseat.git
+cd minicurso-springboot-rocketseat
 
 # Compilar o projeto
 mvn clean install
@@ -102,8 +102,8 @@ java -jar target/todolist-1.0.0.jar
 
 ```
 # Clone o repositório
-git clone https://github.com/seu-usuario/todolist-api.git
-cd todolist-api
+git clone https://github.com/Gkanawati/minicurso-springboot-rocketseat.git
+cd minicurso-springboot-rocketseat
 
 # Compilar o projeto
 mvn clean install
